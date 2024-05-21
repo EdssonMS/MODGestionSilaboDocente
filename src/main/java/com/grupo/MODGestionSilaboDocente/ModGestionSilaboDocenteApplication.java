@@ -8,7 +8,7 @@ public class ModGestionSilaboDocenteApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ModGestionSilaboDocenteApplication.class, args);
-		System.out.println("HOLA MUNDO");
+		System.out.println("Hola mundo");
 	}
 
 }
