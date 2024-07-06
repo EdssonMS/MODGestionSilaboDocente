@@ -19,8 +19,10 @@ public class SilaboJsonServiceImpl implements SilaboJsonService {
 
     @Override
     public Mono<SilaboJson> save(String json) {
+        System.out.println("Guardando JSON: " + json);
         SilaboJson silaboJson = new SilaboJson(json);
-        return silaboJsonRepository.save(silaboJson);
+        return silaboJsonRepository.save(silaboJson)
+                .doOnError(e -> System.err.println("Error al guardar el silabo: " + e.getMessage()));
     }
 
     @Override

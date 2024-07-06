@@ -1,5 +1,7 @@
 package com.grupo.MODGestionSilaboDocente.Models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -7,7 +9,9 @@ import org.springframework.data.relational.core.mapping.Table;
 public class SilaboJson {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String datos;
 
     public SilaboJson() {

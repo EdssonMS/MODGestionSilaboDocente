@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
 public class SilaboController {
@@ -66,10 +67,11 @@ public class SilaboController {
     }
 
 
-// ===================== SILABO CRUD ==========================================================
+    // ===================== SILABO CRUD ==========================================================
     // Endpoint para guardar un JSON de sílabo
     @PostMapping("/silabo/json")
     public Mono<SilaboJson> saveSilaboJson(@RequestBody String json) {
+        System.out.println("Recibido JSON: " + json);
         return silaboJsonService.save(json);
     }
 
@@ -91,7 +93,7 @@ public class SilaboController {
         return silaboJsonService.deleteById(id);
     }
 
-// ===================== UNIDAD APRENDIZAJE CRUD ==========================================================
+    // ===================== UNIDAD APRENDIZAJE CRUD ==========================================================
     // Endpoint para crear una nueva Unidad de Aprendizaje
     @PostMapping("/unidadesAprendizaje")
     public Mono<UnidadAprendizaje> createUnidadAprendizaje(@RequestBody UnidadAprendizaje unidadAprendizaje) {
@@ -121,5 +123,4 @@ public class SilaboController {
     public Mono<Void> deleteUnidadAprendizaje(@PathVariable Integer id) {
         return unidadAprendizajeService.deleteById(id);
     }
-
 }
