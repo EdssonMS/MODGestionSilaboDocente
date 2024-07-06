@@ -1,42 +1,41 @@
 package com.grupo.MODGestionSilaboDocente.Models;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
-@Table(name = "UNIDAD_APRENDIZAJE")
+import java.util.List;
+
+@Table("UNIDAD_APRENDIZAJE")
 public class UnidadAprendizaje {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+    @Column("ID")
+    private Integer id;
 
-    @Column(name = "NOMBRE_UNIDAD")
+    @Column("NOMBRE_UNIDAD")
     private String nombreUnidad;
 
-    @Column(name = "LOGRO_UNIDAD")
+    @Column("LOGRO_UNIDAD")
     private String logroUnidad;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_SEMANAS_UNIDAD_APRENDIZAJE")
-    private SemanasUnidadAprendizaje semanasUnidadAprendizaje;
+    private List<SemanasUnidadAprendizaje> semanas;
 
-    // Constructores
-    public UnidadAprendizaje() {
-
+    public UnidadAprendizaje(){
     }
 
-    public UnidadAprendizaje(String nombreUnidad, String logroUnidad, SemanasUnidadAprendizaje semanasUnidadAprendizaje) {
+    public UnidadAprendizaje(Integer id, String nombreUnidad, String logroUnidad, List<SemanasUnidadAprendizaje> semanas) {
+        this.id = id;
         this.nombreUnidad = nombreUnidad;
         this.logroUnidad = logroUnidad;
-        this.semanasUnidadAprendizaje = semanasUnidadAprendizaje;
+        this.semanas = semanas;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,11 +55,11 @@ public class UnidadAprendizaje {
         this.logroUnidad = logroUnidad;
     }
 
-    public SemanasUnidadAprendizaje getSemanasUnidadAprendizaje() {
-        return semanasUnidadAprendizaje;
+    public List<SemanasUnidadAprendizaje> getSemanas() {
+        return semanas;
     }
 
-    public void setSemanasUnidadAprendizaje(SemanasUnidadAprendizaje semanasUnidadAprendizaje) {
-        this.semanasUnidadAprendizaje = semanasUnidadAprendizaje;
+    public void setSemanas(List<SemanasUnidadAprendizaje> semanas) {
+        this.semanas = semanas;
     }
 }

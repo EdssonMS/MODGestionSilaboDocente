@@ -1,56 +1,60 @@
 package com.grupo.MODGestionSilaboDocente.Models;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
-@Table(name = "SEMANAS_UNIDAD_APRENDIZAJE")
+@Table("SEMANAS_UNIDAD_APRENDIZAJE")
 public class SemanasUnidadAprendizaje {
 
     @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column("ID")
+    private Integer id;
 
-    @Column(name = "SEMANA")
-    private int semana;
+    @Column("SEMANA")
+    private Integer semana;
 
-    @Column(name = "CONTENIDO")
+    @Column("CONTENIDO")
     private String contenido;
 
-    @Column(name = "ACTIVIDADES")
+    @Column("ACTIVIDADES")
     private String actividades;
 
-    @Column(name = "RECURSOS")
+    @Column("RECURSOS")
     private String recursos;
 
-    @Column(name = "ESTRATEGIAS")
+    @Column("ESTRATEGIAS")
     private String estrategias;
 
-    public SemanasUnidadAprendizaje() {
+    @Column("ID_UNIDAD_APRENDIZAJE")
+    private Integer idUnidadAprendizaje;
 
+    public SemanasUnidadAprendizaje(){
     }
 
-    public SemanasUnidadAprendizaje(int semana, String contenido, String actividades, String recursos, String estrategias) {
+    public SemanasUnidadAprendizaje(Integer id, Integer semana, String contenido, String actividades, String recursos, String estrategias, Integer idUnidadAprendizaje) {
+        this.id = id;
         this.semana = semana;
         this.contenido = contenido;
         this.actividades = actividades;
         this.recursos = recursos;
         this.estrategias = estrategias;
+        this.idUnidadAprendizaje = idUnidadAprendizaje;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getSemana() {
+    public Integer getSemana() {
         return semana;
     }
 
-    public void setSemana(int semana) {
+    public void setSemana(Integer semana) {
         this.semana = semana;
     }
 
@@ -84,5 +88,13 @@ public class SemanasUnidadAprendizaje {
 
     public void setEstrategias(String estrategias) {
         this.estrategias = estrategias;
+    }
+
+    public Integer getIdUnidadAprendizaje() {
+        return idUnidadAprendizaje;
+    }
+
+    public void setIdUnidadAprendizaje(Integer idUnidadAprendizaje) {
+        this.idUnidadAprendizaje = idUnidadAprendizaje;
     }
 }
