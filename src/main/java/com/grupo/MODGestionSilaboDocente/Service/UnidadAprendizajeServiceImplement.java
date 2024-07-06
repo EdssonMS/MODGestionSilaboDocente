@@ -1,8 +1,8 @@
 package com.grupo.MODGestionSilaboDocente.Service;
 
 import com.grupo.MODGestionSilaboDocente.Models.UnidadAprendizaje;
-import com.grupo.MODGestionSilaboDocente.Repository.UnidadAprendizajeRepository;
 import com.grupo.MODGestionSilaboDocente.Repository.SemanasUnidadAprendizajeRepository;
+import com.grupo.MODGestionSilaboDocente.Repository.UnidadAprendizajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -26,5 +26,10 @@ public class UnidadAprendizajeServiceImplement implements UnidadAprendizajeServi
                             return Mono.just(unidad);
                         })
                 );
+    }
+
+    @Override
+    public Mono<Void> deleteById(Integer id) {
+        return unidadAprendizajeRepository.deleteById(id);
     }
 }

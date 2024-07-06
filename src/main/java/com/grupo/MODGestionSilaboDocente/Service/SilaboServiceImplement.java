@@ -1,6 +1,9 @@
 package com.grupo.MODGestionSilaboDocente.Service;
 
-import com.grupo.MODGestionSilaboDocente.Models.*;
+import com.grupo.MODGestionSilaboDocente.Models.Curso;
+import com.grupo.MODGestionSilaboDocente.Models.Docente;
+import com.grupo.MODGestionSilaboDocente.Models.Silabo;
+import com.grupo.MODGestionSilaboDocente.Models.UnidadAprendizaje;
 import com.grupo.MODGestionSilaboDocente.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,4 +57,11 @@ public class SilaboServiceImplement implements SilaboService {
                             });
                 });
     }
+
+    @Override
+    public Mono<Void> deleteById(Integer id) {
+        return silaboUnidadAprendizajeRepository.deleteBySilaboId(id)
+                .then(silaboRepository.deleteById(id));
+    }
+
 }

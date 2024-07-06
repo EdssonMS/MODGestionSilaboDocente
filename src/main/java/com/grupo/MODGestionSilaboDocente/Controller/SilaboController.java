@@ -10,10 +10,7 @@ import com.grupo.MODGestionSilaboDocente.Service.SilaboService;
 import com.grupo.MODGestionSilaboDocente.Service.UnidadAprendizajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -32,6 +29,7 @@ public class SilaboController {
     @Autowired
     private SilaboService silaboService;
 
+    // ENDPOINTS GET (READ)
     @GetMapping("/curso/{id}")
     public Mono<Curso> getCurso(@PathVariable String id) {
         return cursoService.findById(id);
@@ -55,4 +53,25 @@ public class SilaboController {
         return silaboService.findById(id);
     }
 
+    //ENDPOINTS POST (CREATE)
+        //UnidadAprendizaje
+        //Silabo
+
+    //ENDPOINTS PUT (UPDATE)
+        //UnidadAprendizaje
+        //Silabo
+
+
+    // ENDPOINTS DELETE (DELETE)
+    @DeleteMapping("/unidad-aprendizaje/{id}")
+    public Mono<ResponseEntity<Void>> deleteUnidadAprendizaje(@PathVariable Integer id) {
+        return unidadAprendizajeService.deleteById(id)
+                .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    @DeleteMapping("/silabo/{id}")
+    public Mono<ResponseEntity<Void>> deleteSilabo(@PathVariable Integer id) {
+        return silaboService.deleteById(id)
+                .then(Mono.just(ResponseEntity.noContent().build()));
+    }
 }
