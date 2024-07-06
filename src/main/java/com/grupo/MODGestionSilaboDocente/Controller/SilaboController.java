@@ -61,7 +61,6 @@ public class SilaboController {
 
     //ENDPOINTS PUT (UPDATE)
         //UnidadAprendizaje
-
         //Silabo
 
 
