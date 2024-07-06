@@ -5,6 +5,7 @@ import com.grupo.MODGestionSilaboDocente.Repository.SemanasUnidadAprendizajeRepo
 import com.grupo.MODGestionSilaboDocente.Repository.UnidadAprendizajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -15,6 +16,11 @@ public class UnidadAprendizajeServiceImplement implements UnidadAprendizajeServi
 
     @Autowired
     private SemanasUnidadAprendizajeRepository semanasUnidadAprendizajeRepository;
+
+    @Override
+    public Mono<UnidadAprendizaje> save(UnidadAprendizaje unidadAprendizaje) {
+        return unidadAprendizajeRepository.save(unidadAprendizaje);
+    }
 
     @Override
     public Mono<UnidadAprendizaje> findById(Integer id) {
@@ -29,7 +35,22 @@ public class UnidadAprendizajeServiceImplement implements UnidadAprendizajeServi
     }
 
     @Override
+    public Mono<UnidadAprendizaje> update(Integer id, UnidadAprendizaje unidadAprendizaje) {
+        return unidadAprendizajeRepository.findById(id)
+                .flatMap(existingUnidadAprendizaje -> {
+                    existingUnidadAprendizaje.setNombreUnidad(unidadAprendizaje.getNombreUnidad());
+                    existingUnidadAprendizaje.setLogroUnidad(unidadAprendizaje.getLogroUnidad());
+                    return unidadAprendizajeRepository.save(existingUnidadAprendizaje);
+                });
+    }
+
+    @Override
     public Mono<Void> deleteById(Integer id) {
         return unidadAprendizajeRepository.deleteById(id);
+    }
+
+    @Override
+    public Flux<UnidadAprendizaje> findAll() {
+        return unidadAprendizajeRepository.findAll();
     }
 }
