@@ -1,59 +1,98 @@
 package com.grupo.MODGestionSilaboDocente.Models;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+import java.util.List;
 
-@Entity
-@Table(name = "SILABO")
+@Table("SILABO")
 public class Silabo {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+    @Column("ID")
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_ASIGNATURA")
-    private Curso curso;
+    @Column("ID_ASIGNATURA")
+    private String idAsignatura;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_DOCENTE")
-    private Docente docente;
+    @Column("ID_DOCENTE")
+    private String idDocente;
 
-    @Column(name = "LOGROS_APRENDIZAJE")
+    @Column("LOGROS_APRENDIZAJE")
     private String logrosAprendizaje;
 
-    @Column(name = "CAPACIDADES")
-    private String capacidades;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_UNIDAD_APRENDIZAJE")
-    private UnidadAprendizaje unidadAprendizaje;
-
-    @Column(name = "ESTRATEGIA_DIDACTICA")
+    @Column("ESTRATEGIA_DIDACTICA")
     private String estrategiaDidactica;
 
-    @Column(name = "BIBLIOGRAFIA")
+    @Column("BIBLIOGRAFIA")
     private String bibliografia;
 
-    public Silabo() {
+    private Curso curso;
+    private Docente docente;
+    private List<UnidadAprendizaje> unidadesAprendizaje;
 
+    public Silabo(){
     }
 
-    public Silabo(Curso curso, Docente docente, String logrosAprendizaje, String capacidades, UnidadAprendizaje unidadAprendizaje, String estrategiaDidactica, String bibliografia) {
-        this.curso = curso;
-        this.docente = docente;
+    public Silabo(Integer id, String idAsignatura, String idDocente, String logrosAprendizaje, String estrategiaDidactica, String bibliografia, Curso curso, Docente docente, List<UnidadAprendizaje> unidadesAprendizaje) {
+        this.id = id;
+        this.idAsignatura = idAsignatura;
+        this.idDocente = idDocente;
         this.logrosAprendizaje = logrosAprendizaje;
-        this.capacidades = capacidades;
-        this.unidadAprendizaje = unidadAprendizaje;
         this.estrategiaDidactica = estrategiaDidactica;
         this.bibliografia = bibliografia;
+        this.curso = curso;
+        this.docente = docente;
+        this.unidadesAprendizaje = unidadesAprendizaje;
     }
 
-    public int getId() {
+    // Getters and Setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdAsignatura() {
+        return idAsignatura;
+    }
+
+    public void setIdAsignatura(String idAsignatura) {
+        this.idAsignatura = idAsignatura;
+    }
+
+    public String getIdDocente() {
+        return idDocente;
+    }
+
+    public void setIdDocente(String idDocente) {
+        this.idDocente = idDocente;
+    }
+
+    public String getLogrosAprendizaje() {
+        return logrosAprendizaje;
+    }
+
+    public void setLogrosAprendizaje(String logrosAprendizaje) {
+        this.logrosAprendizaje = logrosAprendizaje;
+    }
+
+    public String getEstrategiaDidactica() {
+        return estrategiaDidactica;
+    }
+
+    public void setEstrategiaDidactica(String estrategiaDidactica) {
+        this.estrategiaDidactica = estrategiaDidactica;
+    }
+
+    public String getBibliografia() {
+        return bibliografia;
+    }
+
+    public void setBibliografia(String bibliografia) {
+        this.bibliografia = bibliografia;
     }
 
     public Curso getCurso() {
@@ -72,43 +111,11 @@ public class Silabo {
         this.docente = docente;
     }
 
-    public String getLogrosAprendizaje() {
-        return logrosAprendizaje;
+    public List<UnidadAprendizaje> getUnidadesAprendizaje() {
+        return unidadesAprendizaje;
     }
 
-    public void setLogrosAprendizaje(String logrosAprendizaje) {
-        this.logrosAprendizaje = logrosAprendizaje;
-    }
-
-    public String getCapacidades() {
-        return capacidades;
-    }
-
-    public void setCapacidades(String capacidades) {
-        this.capacidades = capacidades;
-    }
-
-    public UnidadAprendizaje getUnidadAprendizaje() {
-        return unidadAprendizaje;
-    }
-
-    public void setUnidadAprendizaje(UnidadAprendizaje unidadAprendizaje) {
-        this.unidadAprendizaje = unidadAprendizaje;
-    }
-
-    public String getEstrategiaDidactica() {
-        return estrategiaDidactica;
-    }
-
-    public void setEstrategiaDidactica(String estrategiaDidactica) {
-        this.estrategiaDidactica = estrategiaDidactica;
-    }
-
-    public String getBibliografia() {
-        return bibliografia;
-    }
-
-    public void setBibliografia(String bibliografia) {
-        this.bibliografia = bibliografia;
+    public void setUnidadesAprendizaje(List<UnidadAprendizaje> unidadesAprendizaje) {
+        this.unidadesAprendizaje = unidadesAprendizaje;
     }
 }

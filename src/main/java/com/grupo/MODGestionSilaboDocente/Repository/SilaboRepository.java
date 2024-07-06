@@ -1,7 +1,9 @@
 package com.grupo.MODGestionSilaboDocente.Repository;
 
 import com.grupo.MODGestionSilaboDocente.Models.Silabo;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SilaboRepository extends CrudRepository<Silabo, Integer> {
+@Repository
+public interface SilaboRepository extends R2dbcRepository<Silabo, Integer> {
 }

@@ -1,8 +1,11 @@
 package com.grupo.MODGestionSilaboDocente.Repository;
 
 import com.grupo.MODGestionSilaboDocente.Models.SemanasUnidadAprendizaje;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 
-public interface SemanasUnidadAprendizajeRepository extends CrudRepository<SemanasUnidadAprendizaje, Integer> {
-
+@Repository
+public interface SemanasUnidadAprendizajeRepository extends R2dbcRepository<SemanasUnidadAprendizaje, Integer> {
+    Flux<SemanasUnidadAprendizaje> findAllByIdUnidadAprendizaje(Integer idUnidadAprendizaje);
 }
