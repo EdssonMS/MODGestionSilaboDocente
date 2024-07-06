@@ -1,13 +1,7 @@
 package com.grupo.MODGestionSilaboDocente.Controller;
 
-import com.grupo.MODGestionSilaboDocente.Models.Curso;
-import com.grupo.MODGestionSilaboDocente.Models.Docente;
-import com.grupo.MODGestionSilaboDocente.Models.Silabo;
-import com.grupo.MODGestionSilaboDocente.Models.UnidadAprendizaje;
-import com.grupo.MODGestionSilaboDocente.Service.CursoService;
-import com.grupo.MODGestionSilaboDocente.Service.DocenteService;
-import com.grupo.MODGestionSilaboDocente.Service.SilaboService;
-import com.grupo.MODGestionSilaboDocente.Service.UnidadAprendizajeService;
+import com.grupo.MODGestionSilaboDocente.Models.*;
+import com.grupo.MODGestionSilaboDocente.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +22,14 @@ public class SilaboController {
 
     @Autowired
     private SilaboService silaboService;
+
+    private final SilaboJsonService silaboJsonService;
+
+    @Autowired
+    public SilaboController(SilaboJsonService silaboJsonService) {
+        this.silaboJsonService = silaboJsonService;
+    }
+
 
     // ENDPOINTS GET (READ)
     @GetMapping("/curso/{id}")
@@ -73,5 +75,20 @@ public class SilaboController {
     public Mono<ResponseEntity<Void>> deleteSilabo(@PathVariable Integer id) {
         return silaboService.deleteById(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    //RETORNAR TODOS LOS SILABOS QUE ESTEN REGISTRADOS
+
+
+    // Endpoint para guardar un JSON de sílabo
+    @PostMapping("/silabo/json")
+    public Mono<SilaboJson> saveSilaboJson(@RequestBody String json) {
+        return silaboJsonService.save(json);
+    }
+
+    // Endpoint para obtener un JSON de sílabo por ID
+    @GetMapping("/silabo/json/{id}")
+    public Mono<String> getSilaboJson(@PathVariable Integer id) {
+        return silaboJsonService.findById(id);
     }
 }

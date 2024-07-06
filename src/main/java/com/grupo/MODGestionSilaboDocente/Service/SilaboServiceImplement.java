@@ -1,9 +1,6 @@
 package com.grupo.MODGestionSilaboDocente.Service;
 
-import com.grupo.MODGestionSilaboDocente.Models.Curso;
-import com.grupo.MODGestionSilaboDocente.Models.Docente;
-import com.grupo.MODGestionSilaboDocente.Models.Silabo;
-import com.grupo.MODGestionSilaboDocente.Models.UnidadAprendizaje;
+import com.grupo.MODGestionSilaboDocente.Models.*;
 import com.grupo.MODGestionSilaboDocente.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +28,24 @@ public class SilaboServiceImplement implements SilaboService {
     @Autowired
     private SilaboUnidadAprendizajeRepository silaboUnidadAprendizajeRepository;
 
+    @Autowired
+    private CompetenciaRepository competenciaRepository;
+
     @Override
     public Mono<Silabo> findById(Integer id) {
         return silaboRepository.findById(id)
                 .flatMap(silabo -> {
-                    Mono<Curso> cursoMono = cursoRepository.findById(silabo.getIdAsignatura());
+                    Mono<Curso> cursoMono = cursoRepository.findById(silabo.getIdAsignatura())
+                            .flatMap(curso -> {
+                                Flux<Competencia> competenciasFlux = competenciaRepository.findByCursoCodigo(curso.getCodAsignatura());
+                                return competenciasFlux.collectList().map(competencias -> {
+                                    curso.setCompetencias(competencias);
+                                    return curso;
+                                });
+                            });
+
                     Mono<Docente> docenteMono = docenteRepository.findById(silabo.getIdDocente());
+
                     Flux<UnidadAprendizaje> unidadesAprendizajeFlux = silaboUnidadAprendizajeRepository.findAllByIdSilabo(silabo.getId())
                             .flatMap(silaboUnidad -> unidadAprendizajeRepository.findById(silaboUnidad.getIdUnidadAprendizaje())
                                     .flatMap(unidad -> semanasUnidadAprendizajeRepository.findAllByIdUnidadAprendizaje(unidad.getId())
@@ -64,4 +73,8 @@ public class SilaboServiceImplement implements SilaboService {
                 .then(silaboRepository.deleteById(id));
     }
 
+    @Override
+    public Flux<Silabo> findAll() {
+        return silaboRepository.findAll();
+    }
 }
