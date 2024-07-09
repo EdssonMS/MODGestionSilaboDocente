@@ -24,6 +24,9 @@ public class SilaboController {
     @Autowired
     private SilaboService silaboService;
 
+    @Autowired
+    private GrupoJsonService grupoJsonService;
+
     private final SilaboJsonService silaboJsonService;
 
     @Autowired
@@ -122,4 +125,34 @@ public class SilaboController {
         return unidadAprendizajeService.deleteById(id);
     }
 
+    // ===================== GRUPO JSON CRUD ==========================================================
+    // Endpoint para guardar un JSON de grupo
+    @PostMapping("/grupo/json")
+    public Mono<GrupoJson> saveGrupoJson(@RequestBody String json) {
+        return grupoJsonService.save(json);
+    }
+
+    // Endpoint para obtener un JSON de grupo por ID
+    @GetMapping("/grupo/json/{id}")
+    public Mono<String> getGrupoJson(@PathVariable Integer id) {
+        return grupoJsonService.findById(id);
+    }
+
+    // Endpoint para actualizar un JSON de grupo por ID
+    @PutMapping("/grupo/json/{id}")
+    public Mono<GrupoJson> updateGrupoJson(@PathVariable Integer id, @RequestBody String json) {
+        return grupoJsonService.update(id, json);
+    }
+
+    // Endpoint para eliminar un JSON de grupo por ID
+    @DeleteMapping("/grupo/json/{id}")
+    public Mono<Void> deleteGrupoJson(@PathVariable Integer id) {
+        return grupoJsonService.deleteById(id);
+    }
+
+    // Endpoint para obtener todos los JSON de grupos
+    @GetMapping("/grupo/json")
+    public Flux<GrupoJson> getAllGrupoJson() {
+        return grupoJsonService.findAll();
+    }
 }
