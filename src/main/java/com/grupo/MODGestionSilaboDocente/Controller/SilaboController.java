@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
 public class SilaboController {
@@ -24,6 +23,9 @@ public class SilaboController {
 
     @Autowired
     private SilaboService silaboService;
+
+    @Autowired
+    private GrupoJsonService grupoJsonService;
 
     private final SilaboJsonService silaboJsonService;
 
@@ -67,11 +69,10 @@ public class SilaboController {
     }
 
 
-    // ===================== SILABO CRUD ==========================================================
+// ===================== SILABO CRUD ==========================================================
     // Endpoint para guardar un JSON de sílabo
     @PostMapping("/silabo/json")
     public Mono<SilaboJson> saveSilaboJson(@RequestBody String json) {
-        System.out.println("Recibido JSON: " + json);
         return silaboJsonService.save(json);
     }
 
@@ -93,7 +94,7 @@ public class SilaboController {
         return silaboJsonService.deleteById(id);
     }
 
-    // ===================== UNIDAD APRENDIZAJE CRUD ==========================================================
+// ===================== UNIDAD APRENDIZAJE CRUD ==========================================================
     // Endpoint para crear una nueva Unidad de Aprendizaje
     @PostMapping("/unidadesAprendizaje")
     public Mono<UnidadAprendizaje> createUnidadAprendizaje(@RequestBody UnidadAprendizaje unidadAprendizaje) {
@@ -122,5 +123,36 @@ public class SilaboController {
     @DeleteMapping("/unidadesAprendizaje/{id}")
     public Mono<Void> deleteUnidadAprendizaje(@PathVariable Integer id) {
         return unidadAprendizajeService.deleteById(id);
+    }
+
+    // ===================== GRUPO JSON CRUD ==========================================================
+    // Endpoint para guardar un JSON de grupo
+    @PostMapping("/grupo/json")
+    public Mono<GrupoJson> saveGrupoJson(@RequestBody String json) {
+        return grupoJsonService.save(json);
+    }
+
+    // Endpoint para obtener un JSON de grupo por ID
+    @GetMapping("/grupo/json/{id}")
+    public Mono<String> getGrupoJson(@PathVariable Integer id) {
+        return grupoJsonService.findById(id);
+    }
+
+    // Endpoint para actualizar un JSON de grupo por ID
+    @PutMapping("/grupo/json/{id}")
+    public Mono<GrupoJson> updateGrupoJson(@PathVariable Integer id, @RequestBody String json) {
+        return grupoJsonService.update(id, json);
+    }
+
+    // Endpoint para eliminar un JSON de grupo por ID
+    @DeleteMapping("/grupo/json/{id}")
+    public Mono<Void> deleteGrupoJson(@PathVariable Integer id) {
+        return grupoJsonService.deleteById(id);
+    }
+
+    // Endpoint para obtener todos los JSON de grupos
+    @GetMapping("/grupo/json")
+    public Flux<GrupoJson> getAllGrupoJson() {
+        return grupoJsonService.findAll();
     }
 }
