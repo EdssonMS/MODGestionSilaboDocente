@@ -1,6 +1,9 @@
 import axios from "axios";
 import AddSilaboFormInputs from "../components/AddSilaboFormInputs"
 import useAddSilaboFormContext from "../hooks/useAddSilaboFormContext";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Modal, Button} from "react-bootstrap";
 
 const Form = () => {
     
@@ -14,36 +17,79 @@ const Form = () => {
         prevHide,
         nextHide,
         submitHide,
-        nombreDocente,
-        setNombreDocente,
-        apellidoDocente,
-        setApellidoDocente,
-        correoDocente,
-        setCorreoDocente
+        loadSilabo
     } = useAddSilaboFormContext()
+
+    const { id } = useParams();
+
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true; // Bandera para verificar si el componente está montado
+      
+        if (id && isMounted) {
+          // Cargar datos del sílabo para edición solo si hay un ID y el componente está montado
+          axios
+            .get(`http://localhost:8080/silabo/json/${id}`)
+            .then((response) => {
+              if (isMounted) {
+                // Verificar si el componente está montado antes de actualizar el estado
+                if (response.data) {
+                  loadSilabo(response.data); // Actualiza el estado del sílabo con los datos recibidos
+                } else {
+                  console.error("No se encontraron datos en la respuesta:", response.data);
+                }
+              }
+            })
+            .catch((error) => {
+              console.error("Error al cargar el sílabo para edición:", error);
+            });
+        }
+      
+        return () => {
+          isMounted = false; // Actualizar la bandera cuando el componente se desmonte
+        };
+      }, [id]); // Solo se ejecutará cuando id cambie
 
     const handlePrev = () => setPage(prev => prev - 1)
 
     const handleNext = () => setPage(prev => prev + 1)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(JSON.stringify(silabo));
+    const handleSubmit = async () => {
+        //e.preventDefault();
+        //console.log(JSON.stringify(silabo));
+    console.log('Silabo antes de enviar:', silabo);
 
         try {
-            const response = await axios.post('http://localhost:8080/silabo/json', silabo, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            console.log('Respuesta del servidor:', response.data);
+            if (id) {
+                // Editar sílabo existente
+                const response = await axios.put(`http://localhost:8080/silabo/json/${id}`, silabo, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log('Respuesta del servidor:', response.data);
+            } else {
+                // Crear nuevo sílabo
+                const response = await axios.post('http://localhost:8080/silabo/json', silabo, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log('Respuesta del servidor:', response.data);
+            }
         } catch(error) {
-            console.error('Error al enviar el silabo', error);
+            console.error('Error al enviar el sílabo', error);
         }
     }
 
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
     
+    const handleConfirmSubmit = () => {
+        handleCloseModal();
+        handleSubmit();
+    }
 
     const content = (
         <main id='info-cont'>
@@ -68,6 +114,7 @@ const Form = () => {
                     >
                         Anterior sección
                     </button>
+                    &nbsp;
                     <button 
                         type="button"
                         className={`btn-primary ${nextHide}`}
@@ -76,16 +123,32 @@ const Form = () => {
                     >
                         Siguiente sección
                     </button>
+                    &nbsp;
                     <button 
-                        type="submit"
+                        type="button"
                         className={`btn-primary ${submitHide}`}
-                        disabled={!canSubmit}
+                        onClick={handleShowModal}
+                        //disabled={!canSubmit}
                     >
                         Guardar
                     </button>
                 </div>
             </form>
         </section>
+        <Modal show={showModal} onHide={handleCloseModal} centered>
+                <Modal.Header className="custom-modal-title">
+                    <Modal.Title className="custom-modal-title">Confirmación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>¿Estás seguro de que deseas guardar este sílabo?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={handleCloseModal}>
+                        Cancelar
+                    </Button>
+                    <Button variant="success" onClick={handleConfirmSubmit}>
+                        Confirmar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
       </main>
     )
 

@@ -178,6 +178,24 @@ a {
 #info-form .info-time {
   width: 100%;
 }
+
+.group-input-cont {
+  
+  margin-top: 1.5rem;
+}
+
+.group-input-cont .group-label {
+  padding-bottom: 0.15rem;
+  margin-bottom: 0.05px;
+}
+
+.group-input-cont .group-input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
 #info-form .info-time .time-input {
   width: 40%;
 }
@@ -250,6 +268,28 @@ a {
   margin-bottom: 20px;
 }
 
+.semana-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.semana-grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.semana-grid > div > label {
+  margin-bottom: 5px;
+}
+
+.semana-grid > div > input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .silabo-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -290,4 +330,15 @@ a {
 .btn-primary:active,
 .btn-secondary:active {
   transform: translateY(-1px);
+}
+
+.custom-modal-title {
+  background-color: #343a40; /* Color de fondo */
+  color: #ffffff; /* Color de letra */
+  padding: 10px; /* Opcional: para agregar algo de padding */
+  border-radius: 5px; /* Opcional: para redondear los bordes */
+}
+
+#input-semanas .group-input-cont input, label {
+  display:block;
 }

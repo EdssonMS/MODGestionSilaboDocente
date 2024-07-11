@@ -36,7 +36,8 @@ export const AddSilaboComponent = () => {
                 semestreAcademico: response.data.semestreAcademico,
                 modalidad: response.data.modalidad,
                 sumilla: response.data.sumilla,
-                evaluacionAprendizaje: response.data.evaluacionAprendizaje
+                evaluacionAprendizaje: response.data.evaluacionAprendizaje,
+                competencias: response.data.competencias
             }))
         }).catch(error => {
             console.error('Error al obtener el curso:', error);
@@ -163,7 +164,11 @@ export const AddSilaboComponent = () => {
                                 disabled
                             />
                         </div>
-                        
+                        <br/>
+                        <div className='info-subject-search'>
+                            <button className='btn btn-warning' type='button'>Modificar sección</button>
+                            <button className='btn btn-success' type='button'>Guardar</button>
+                        </div>
                     </div>
                     <div className='silabo-grid-wrapper'>
                         {/*Tipo curso*/}
@@ -285,7 +290,7 @@ export const AddSilaboComponent = () => {
                                 name='modalidad'
                                 className='info-input modalidad'
                                 value={silabo.modalidad}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 /*onBlur={handleBlur}*/>
                                     <option selected>Seleccionar...</option>
                                     <option>Presencial</option>

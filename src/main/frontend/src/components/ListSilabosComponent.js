@@ -1,35 +1,67 @@
 /*Componente para mostrar el historial de sílabos creados*/
 
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component'
+import SilaboService from '../services/SilaboService';
+import { Modal, Button } from 'react-bootstrap';
+import useAddSilaboFormContext from '../hooks/useAddSilaboFormContext';
 
 export const ListSilabosComponent = () => {
 
   const [silabos, setSilabos] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const navigate = useNavigate();
+  const { loadSilabo } = useAddSilaboFormContext();
 
   useEffect(() => {
-    listarSilabos();
-  },[])
+    SilaboService.getAllSilabos()
+      .then((response) => {
+        const data = response.data.map((silabo) => {
+          const datos = JSON.parse(silabo.datos); 
+          return {
+            id: silabo.id,
+            nombreCurso: datos.nombreCurso,
+            codigoCurso: datos.codigoCurso,
+            tipoAsignatura: datos.tipoAsignatura,
+          };
+        });
+        setSilabos(data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener los sílabos:', error);
+      });
+  }, []);
 
-  /*Pendiente hasta crear el servicio de silabos (SilaboService.js) y sus métodos para la conexión con la BD*/
+  const handleEdit = (row) => {
+    // Lógica para editar el silabo
+    navigate(`/edit-silabo/${row.id}`);
+  };
+  
+  const handleDownload = (row) => {
+    // Lógica para descargar el silabo
+    navigate(`/download-silabo/${row.id}`);
+  };
+  
+  const handleDelete = (id) => {
+    // Lógica para eliminar el silabo
+    setDeleteId(id);
+    setShowModal(true);
+  };
 
-  const listarSilabos = () => {
-    /*SilaboService.getAllSilabos().then(reponse => {
-        setSilabos(response.data);
-        console.log(response.data);
-    }).catch(error => {
-        console.log(error);
-    }) */
-  }
-
-  const deleteSilabo = (silaboId) => {
-    /*SilaboService.deleteSilabo(silaboId).then((response) => {
-        listarSilabos();
-    }).catch(error => {
-        console.log(error);
-    }) */
-  }
+  const confirmDelete = () => {
+    SilaboService.deleteSilabo(deleteId)
+    .then(() => {
+      setSilabos(silabos.filter(silabo => silabo.id !== deleteId));
+      setShowModal(false);
+    })
+    .catch((error) => {
+      console.error('Error al eliminar el silabo:', error);
+      setShowModal(false);
+    });
+  };
 
   const customStyles = {
     headRow: {
@@ -62,43 +94,36 @@ export const ListSilabosComponent = () => {
 
   const column = [
     {
-        name: "Código",
-        selector: row => row.codigo
+        name: "ID",
+        selector: row => row.id,
+        sortable: true,
     },
     {
         name: "Asignatura",
-        selector: row => row.asignatura
+        selector: row => row.nombreCurso,
+        sortable: true,
     },
     {
-        name: "Últ. Actualización",
-        selector: row => row.lastUpdate
+        name: "Código Asignatura",
+        selector: row => row.codigoCurso,
+        sortable: true,
+    },
+    {
+        name: 'Tipo de Asignatura',
+        selector: row => row.tipoAsignatura,
+        sortable: true,
     },
     {
         name: "Acciones",
         width: "350px",
         button: true,
-		cell: () => 
+		cell: row => 
         <div id='list-actions'>
-            <button style={{marginRight:'10px'}} className='btn btn-primary'>Editar</button>
-            <button style={{marginRight:'10px'}} className='btn btn-warning'>Descargar</button>
-            <button style={{fontFamily: 'Roboto Serif', fontSize: '0.875rem', paddingLeft: '10px', paddingRight: '10px', borderRadius: '5px'}} className='btn btn-danger'>Eliminar</button>
+            <button style={{marginRight:'10px'}} className='btn btn-primary' onClick={() => handleEdit(row)}>Editar</button>
+            <button style={{marginRight:'10px'}} className='btn btn-warning' onClick={() => handleDownload(row)}>Descargar</button>
+            <button style={{fontFamily: 'Roboto Serif', fontSize: '0.875rem', paddingLeft: '10px', paddingRight: '10px', borderRadius: '5px'}} className='btn btn-danger' onClick={() => handleDelete(row.id)}>Eliminar</button>
         </div>},
   ];
-
-  const data = [
-    {
-      codigo: 1,
-      asignatura: '20W0603 - DISEÑO DE SOFTWARE',
-      lastUpdate: '2024/07/03',
-      acciones: ''
-  },
-  {
-    codigo: 2,
-    asignatura: '20W0603 - DISEÑO DE SOFTWARE',
-    lastUpdate: '2024/07/03',
-    acciones: ''
-  },
-];
 
   return (
     
@@ -115,48 +140,32 @@ export const ListSilabosComponent = () => {
         <div style={{padding: "50px 0.5%", borderRadius:"10px"}}>
         <DataTable
                 columns = {column}
-                data = {data}
+                data = {silabos}
                 persistTableHead = {true}
                 noDataComponent = {'No hay registros para mostrar'}
                 highlightOnHover = {true}
                 pagination = {true}
                 paginationComponentOptions = {paginationComponentOptions}
                 customStyles={customStyles}
+                paginationPerPage = {5}
+                paginationRowsPerPageOptions = {[5, 10, 15, 20, 25, 30]}
             />
         </div>
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                    <Modal.Header className='custom-modal-title'>
+                        <Modal.Title className="custom-modal-title">Confirmación</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>¿Estás seguro de que deseas eliminar este sílabo?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="danger" onClick={() => setShowModal(false)}>
+                            Cancelar
+                        </Button>
+                        <Button variant="success" onClick={confirmDelete}>
+                            Confirmar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
     </section>
-        /*<table className='table table-striped'>
-            <thead className='thead-dark'>
-                <th scope="col">Código</th>
-                <th scope="col">Asignatura</th>
-                <th scope="col">Últ. actualización</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Formato</th>
-                <th scope="col">Eliminar</th>
-            </thead>
-            <tbody>
-                {
-                    silabos.map(
-                        silabo =>
-                            <tr key={silabo.id}>
-                                <td>{silabo.codigo}</td>
-                                <td>{silabo.curso}</td>
-                                <td>{silabo.ultActualizacion}</td>
-                                <td>
-                                    Botón que redirija al componente de registro de silabo
-                                </td>
-                                <td>
-                                    Botón para generar el PDF del sílabo
-                                </td>
-                                <td>
-                                    <button style={{marginLeft:"10px"}} className='btn btn-danger' onClick={() => deleteSilabo(silabo.id)}>Eliminar</button>
-                                </td>
-                            </tr>
-                    )
-                }
-            </tbody>
-        </table>
-    </section>*/
   )
 }
 

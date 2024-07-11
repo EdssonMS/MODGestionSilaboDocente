@@ -62,7 +62,7 @@ export const AddSilaboPage2 = () => {
               </thead>
               <tbody>
                 {
-                  competencias?.map(
+                  silabo.competencias.map(
                     competencia =>
                       <tr key={competencia.codigo}>
                         <td>{competencia.codigo}</td>

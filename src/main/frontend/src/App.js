@@ -7,6 +7,9 @@ import AddSilaboForm from './components/AddSilaboForm'
 import AddSilaboComponent from './components/AddSilaboComponent';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AddSilaboFormProvider } from './context/AddSilaboFormContext';
+import ListUnidadesComponent from './components/ListUnidadesComponent';
+import AddGrupoComponent from './components/AddGrupoComponent';
+import { DownloadSilaboComponent } from './components/DownloadSilaboComponent';
 
 function App() {
   return (
@@ -21,6 +24,14 @@ function App() {
             <Route exact path='/add-silabo' element = {<AddSilaboFormProvider>
               <AddSilaboForm />
             </AddSilaboFormProvider>}></Route>
+            <Route exact path='/edit-silabo/:id' element = {<AddSilaboFormProvider>
+              <AddSilaboForm />
+            </AddSilaboFormProvider>}></Route>
+            <Route exact path='/unidades' element = {<ListUnidadesComponent/>}></Route>
+            <Route exact path='/add-grupo' element = {<AddGrupoComponent/>}></Route>
+            <Route exact path='/edit-grupo/:id' element = {<AddGrupoComponent/>}></Route>
+
+            <Route exact path='/download-silabo/:id' element = {<DownloadSilaboComponent/>}></Route> 
             
             {/*<AddSilaboComponent/>*/}
           </Routes>

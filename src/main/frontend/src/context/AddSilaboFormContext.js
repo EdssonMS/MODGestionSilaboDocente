@@ -36,7 +36,9 @@ export const AddSilaboFormProvider = ({children}) => {
         codigoGrupoUnidad: "",
         estrategiaDidactica: "",
         evaluacionAprendizaje: "",
-        bibliografia: ""
+        bibliografia: "",
+        competencias: [],
+        unidadesAprendizaje: []
     })
     
 
@@ -75,26 +77,20 @@ export const AddSilaboFormProvider = ({children}) => {
 
     const disablePrev = page === 0
 
-    /*Verificar campos antes de pasar página*/
-    /*const disableNext =
-        (page === Object.keys(title).length - 1)
-        || (page === 0 && !canNextPage1)
-        || (page === 1 && !canNextPage)
-        || (page === 2 && !canNextPage)
-        || (page === 3 && !canNextPage)
-        || (page === 4 && !canNextPage)
-        || (page === 5 && !canNextPage)*/
-
     const prevHide = page === 0 && "remove-button"
 
     const nextHide = page === Object.keys(title).length - 1 && "remove-button"
 
     const submitHide = page !== Object.keys(title).length - 1 && "remove-button"
 
+    const loadSilabo = (silaboData) => {
+        setSilabo(silaboData)
+    }
+
     return (
         <AddSilaboFormContext.Provider value={{title, page, setPage, silabo, setSilabo, 
              canSubmit, handleChange, disablePrev, 
-             prevHide, nextHide, submitHide}}>
+             prevHide, nextHide, submitHide, loadSilabo}}>
             {children}
         </AddSilaboFormContext.Provider>
     )

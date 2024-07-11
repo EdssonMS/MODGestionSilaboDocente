@@ -17,14 +17,14 @@ export const SidebarData = [
         link:"/silabos"
     },
     {
-        title:"Home",
+        title:"Silabos",
         
         link:"/silabos"
     },
     {
-        title:"Home",
+        title:"Unidades",
         
-        link:"/silabos"
+        link:"/unidades"
     },
     {
         title:"Home",
