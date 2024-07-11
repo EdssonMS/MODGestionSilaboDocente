@@ -1,0 +1,344 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  background-color: #bed4ff;
+  margin: 0;
+  padding: 0;
+}
+
+.remove-button {
+  display: none;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  background-color: #424C6F;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.sidebar-list {
+  height: auto;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar-list .sidebar-row {
+  width: 100%;
+  height: 60px;
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  color: #FAFAFA;
+  justify-content: center;
+  align-items: center;
+  font-family: "Souliyo Unicode";
+}
+
+.sidebar-list .sidebar-row:hover {
+  cursor: pointer;
+  background-color: #2d3345;
+}
+
+
+section.container {
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  color: #181920;
+  font-family: "Souliyo Unicode";
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  font-weight: 500;
+}
+
+a {
+  color: #181920;
+  font-weight: 500;
+}
+
+.container {
+  width: min(90%, 71.25rem);
+  margin: 0 auto;
+  overflow: scroll;
+}
+
+#info-header,
+.section-title {
+  font-size: 1.2rem;
+}
+
+.section-title {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+#info-cont {
+  width: min(90%, 71.25rem);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#info-form {
+  padding: 0 0.25rem;
+}
+#info-form .titulo-doc {
+  width: 25%;
+}
+#info-form .silabo-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#info-form .info-input-cont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+#info-form .info-input-cont .info-label {
+  padding-bottom: 0.15rem;
+  margin-bottom: 0.05px;
+}
+#info-form .info-input-cont .info-input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+#info-form .info-time {
+  width: 100%;
+}
+
+.group-input-cont {
+  
+  margin-top: 1.5rem;
+}
+
+.group-input-cont .group-label {
+  padding-bottom: 0.15rem;
+  margin-bottom: 0.05px;
+}
+
+.group-input-cont .group-input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+#info-form .info-time .time-input {
+  width: 40%;
+}
+#info-form .silabo-btn-flex {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#info-content-cont {
+  margin: 2rem auto;
+  height: 87vh;
+}
+
+#info-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#info-subject-search {
+  display: flex;
+  align-items: center;
+}
+
+#info-docente-search {
+  display: flex;
+  align-items: center;
+}
+
+#silabo-form-btn {
+  display: flex;
+  align-items: center;
+}
+
+#list-header {
+  margin-top: 20px;
+}
+
+#list-content-cont {
+  margin: 2rem auto;
+  height: 87vh;
+}
+
+#list-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Roboto Serif';
+}
+
+#list-welcome {
+  display: flex;
+  align-items: center;
+}
+
+#list-actions {
+  display: flex;
+  align-items: center;
+}
+
+#btn-list-create {
+  margin-left: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+#btn-list-return {
+  margin-bottom: 20px;
+}
+
+.semana-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.semana-grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.semana-grid > div > label {
+  margin-bottom: 5px;
+}
+
+.semana-grid > div > input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.silabo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10rem;
+}
+.silabo-grid .silabo-grid-wrapper {
+  width: 100%;
+}
+
+.btn-primary,
+.new-syllabus-download {
+  color: white;
+  font-size: 0.875rem;
+}
+
+.btn-primary {
+  background-color: #0b8aff;
+  font-family: "Roboto Serif";
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  font-family: "Roboto Serif";
+  border: none;
+  margin: 0.5rem 0;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+  background-color: #8cc8ff;
+  transition: transform 0.2s ease 0s;
+}
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(-1px);
+}
+
+.custom-modal-title {
+  background-color: #343a40; /* Color de fondo */
+  color: #ffffff; /* Color de letra */
+  padding: 10px; /* Opcional: para agregar algo de padding */
+  border-radius: 5px; /* Opcional: para redondear los bordes */
+}
+
+#input-semanas .group-input-cont input, label {
+  display:block;
+}
