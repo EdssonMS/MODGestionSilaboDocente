@@ -89,7 +89,32 @@ public class PDFGenerator {
 
         /*=======================================COMPETENCIAS==========================================*/
         document.add(new Paragraph("3. COMPETENCIAS DEL PERFIL DE EGRESO A LA QUE CONTRIBUYE LA ASIGNATURA").setFontSize(10).setBold().setFontColor(headerColor));
+        // Obtener la lista de competencias del JSON
+        JsonNode competenciasNode = rootNode.get("competencias");
 
+// Crear la tabla para las competencias
+        float[] competenciasColumnWidths = {2, 4, 2, 2}; // Ancho de las columnas
+        Table competenciasTable = new Table(competenciasColumnWidths);
+        competenciasTable.setFontSize(9);
+        competenciasTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        competenciasTable.setWidth(UnitValue.createPercentValue(90));
+
+// CABECERAS DE LA TABLA
+        competenciasTable.addHeaderCell("Código").setFontColor(headerColor).setBold();
+        competenciasTable.addHeaderCell("Descripción").setFontColor(headerColor).setBold();
+        competenciasTable.addHeaderCell("Tipo").setFontColor(headerColor).setBold();
+        competenciasTable.addHeaderCell("Nivel").setFontColor(headerColor).setBold();
+
+// Recorrer las competencias y añadir filas a la tabla
+        for (JsonNode competencia : competenciasNode) {
+            competenciasTable.addCell(competencia.get("codigo").asText()).setFontColor(textColor);
+            competenciasTable.addCell(competencia.get("descripcion").asText()).setFontColor(textColor);
+            competenciasTable.addCell(competencia.get("tipo").asText()).setFontColor(textColor);
+            competenciasTable.addCell(competencia.get("nivel").asText()).setFontColor(textColor);
+        }
+
+// Añadir la tabla al documento
+        document.add(competenciasTable);
         /*=======================================LOGROS DE APRENDIZAJE==========================================*/
         String logrosAprendizaje = rootNode.get("logrosAprendizaje").asText();
         document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
