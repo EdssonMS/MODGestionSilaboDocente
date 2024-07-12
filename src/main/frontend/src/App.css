@@ -333,7 +333,7 @@ a {
 }
 
 .custom-modal-title {
-  background-color: #343a40; /* Color de fondo */
+  background-color: #424c6f; /* Color de fondo */
   color: #ffffff; /* Color de letra */
   padding: 10px; /* Opcional: para agregar algo de padding */
   border-radius: 5px; /* Opcional: para redondear los bordes */
@@ -341,4 +341,14 @@ a {
 
 #input-semanas .group-input-cont input, label {
   display:block;
+}
+
+/* Form.css */
+.fixed-buttons {
+  position: absolute;
+  top: 100px; /* Ajusta el valor según la distancia deseada desde la parte superior */
+  right: 150px; /* Ajusta el valor según la distancia deseada desde la parte derecha */
+  z-index: 1000; /* Asegúrate de que los botones estén por encima de otros elementos */
+  display: flex;
+  gap: 0px; /* Espacio entre los botones */
 }

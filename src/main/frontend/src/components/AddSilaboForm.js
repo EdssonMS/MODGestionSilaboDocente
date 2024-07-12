@@ -1,7 +1,7 @@
 import axios from "axios";
 import AddSilaboFormInputs from "../components/AddSilaboFormInputs"
 import useAddSilaboFormContext from "../hooks/useAddSilaboFormContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Modal, Button} from "react-bootstrap";
 
@@ -21,6 +21,7 @@ const Form = () => {
     } = useAddSilaboFormContext()
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
 
@@ -81,6 +82,8 @@ const Form = () => {
         } catch(error) {
             console.error('Error al enviar el sílabo', error);
         }
+
+        navigate('/silabos');
     }
 
     const handleShowModal = () => setShowModal(true);
@@ -93,6 +96,7 @@ const Form = () => {
 
     const content = (
         <main id='info-cont'>
+            
         <section id='info-content-cont' className='container'>
             
             <form id='info-form' tabIndex={0} onSubmit={handleSubmit}> 
@@ -105,14 +109,14 @@ const Form = () => {
                 <AddSilaboFormInputs />
                 
                 <br />
-                <div className='silabo-form-btn'>
+                <div className='fixed-buttons'>
                     <button 
                         type="button"
                         className={`btn-primary ${prevHide}`}
                         onClick={handlePrev}
                         disabled={disablePrev}
                     >
-                        Anterior sección
+                        Anterior 
                     </button>
                     &nbsp;
                     <button 
@@ -121,7 +125,7 @@ const Form = () => {
                         onClick={handleNext}
 
                     >
-                        Siguiente sección
+                        Siguiente
                     </button>
                     &nbsp;
                     <button 
