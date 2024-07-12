@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GrupoService from '../services/GrupoService';
 
 const CrearGrupoComponent = () => {
     const { id } = useParams();
     const isEditing = Boolean(id);
+    const navigate = useNavigate();
 
     
     const [grupo, setGrupo] = useState({
@@ -77,6 +78,7 @@ const CrearGrupoComponent = () => {
                 console.error('Error creando grupo', error);
             });
         }
+        navigate('/unidades');
     };
 
     return (
@@ -85,7 +87,7 @@ const CrearGrupoComponent = () => {
             <form className='group-form' onSubmit={handleSubmit}>
                 <header>
                     <h1 id='info-header'>
-                        {isEditing ? 'Editar Grupo' : 'Programación de contenidos'}
+                        {isEditing ? 'Editar programación de contenidos' : 'Crear programación de contenidos'}
                     </h1>
                 </header>
                 <div className='group-input-cont'> 
@@ -93,15 +95,17 @@ const CrearGrupoComponent = () => {
                     <input
                         className='group-input'
                         type="text"
+                        style={{width:'30%'}}
                         value={grupo.nombre}
                         onChange={(e) => setGrupo({ ...grupo, nombre: e.target.value })}
                     />
                 </div>
                 <div className='group-input-cont'>
                     <label style={{marginRight:'54px'}} className='group-label'>Descripción: </label>
-                    <input
+                    <textarea
                         className='group-input'
                         type="text"
+                        style={{width:'50%'}}
                         value={grupo.descripcion}
                         onChange={(e) => setGrupo({ ...grupo, descripcion: e.target.value })}
                     />
@@ -119,6 +123,7 @@ const CrearGrupoComponent = () => {
                                 className='group-input'
                                 type="text"
                                 value={unidad.nombreUnidad}
+                                style={{width:'50%'}}
                                 onChange={(e) => {
                                     const nuevasUnidades = [...grupo.unidadesAprendizaje];
                                     nuevasUnidades[unidadIndex].nombreUnidad = e.target.value;
@@ -128,10 +133,11 @@ const CrearGrupoComponent = () => {
                         </div>
                         <div className='group-input-cont'>
                             <label style={{marginRight:'22px'}}>Logro de la Unidad: </label>
-                            <input
+                            <textarea
                                 className='group-input'
                                 type="text"
                                 value={unidad.logroUnidad}
+                                style={{width:'100%', height:'100px'}}
                                 onChange={(e) => {
                                     const nuevasUnidades = [...grupo.unidadesAprendizaje];
                                     nuevasUnidades[unidadIndex].logroUnidad = e.target.value;

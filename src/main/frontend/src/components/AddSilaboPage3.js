@@ -16,6 +16,22 @@ export const AddSilaboPage3 = () => {
     submitHide,
     handleChange } = useAddSilaboFormContext()
 
+    const renderLogros = () => {
+      if (!silabo.unidadesAprendizaje || silabo.unidadesAprendizaje.length === 0) {
+          return <p>No hay unidades de aprendizaje disponibles.</p>;
+      }
+
+      return silabo.unidadesAprendizaje.map((unidad, unidadIndex) => (
+          <table key={unidadIndex} className="table">
+              <tbody>
+                  <tr>
+                      <td colSpan="5"><strong>Unidad {unidadIndex+1}: </strong>{unidad.logroUnidad}</td>
+                  </tr>
+              </tbody>
+          </table>
+      ));
+  };
+
   const content = (
     <div className='add-silabo-form3'>
           {/*Logros aprendizaje*/}
@@ -42,7 +58,7 @@ export const AddSilaboPage3 = () => {
             <label for='logrosAprendizaje' className='info-label logros'>
               Logros por unidad
             </label>
-            
+            {renderLogros()}
           </div>
     </div>
   )

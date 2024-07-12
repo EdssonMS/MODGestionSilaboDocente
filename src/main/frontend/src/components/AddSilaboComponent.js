@@ -102,9 +102,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input nombre-curso'
                                 type='text'
                                 value={silabo.nombreCurso}
-                                /*onChange={handleChange}*/
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Area*/}
@@ -121,9 +121,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input area-estudios'
                                 type='text'
                                 value={silabo.areaEstudios}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Numero horas*/}
@@ -140,9 +140,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input horas-semanales'
                                 type='number'
                                 value={silabo.horasSemanales}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Creditos*/}
@@ -159,16 +159,12 @@ export const AddSilaboComponent = () => {
                                 className='info-input creditos'
                                 type='number'
                                 value={silabo.creditos}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         <br/>
-                        <div className='info-subject-search'>
-                            <button className='btn btn-warning' type='button'>Modificar sección</button>
-                            <button className='btn btn-success' type='button'>Guardar</button>
-                        </div>
                     </div>
                     <div className='silabo-grid-wrapper'>
                         {/*Tipo curso*/}
@@ -185,9 +181,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input'
                                 type='text'
                                 value={silabo.tipoAsignatura}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Numero semanas*/}
@@ -204,9 +200,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input'
                                 type='number'
                                 value={silabo.numeroSemanas}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Ciclo*/}
@@ -223,9 +219,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input'
                                 type='text'
                                 value={silabo.ciclo}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Prerequisitos*/}
@@ -242,9 +238,9 @@ export const AddSilaboComponent = () => {
                                 className='info-input'
                                 type='text'
                                 value={silabo.prerequisitos}
-                                //onChange={handleChange}
+                                onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                     </div>
@@ -348,7 +344,7 @@ export const AddSilaboComponent = () => {
                                 value={silabo.apellidoDocente}
                                 onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                         {/*Correo*/}
@@ -367,7 +363,7 @@ export const AddSilaboComponent = () => {
                                 value={silabo.correoDocente}
                                 onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                     </div>
@@ -388,7 +384,7 @@ export const AddSilaboComponent = () => {
                                 value={silabo.nombreDocente}
                                 onChange={handleChange}
                                 //onBlur={handleBlur}
-                                disabled
+                                //disabled
                             />
                         </div>
                     </div>

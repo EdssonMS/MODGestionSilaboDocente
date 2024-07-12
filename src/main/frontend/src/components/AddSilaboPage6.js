@@ -18,7 +18,7 @@ export const AddSilaboPage6 = () => {
             <label for='bibliografia' className='info-label bibliografia'>
               Bibliografia
             </label>
-            <textarea className='info-input bibliografia' id='bibliografia' name='bibliografia' type='text' value={silabo.bibliografia} onChange={handleChange} rows={9}></textarea>
+            <textarea className='info-input bibliografia' id='bibliografia' name='bibliografia' type='text' value={silabo.bibliografia} onChange={handleChange} rows={16}></textarea>
           </div>
     </div>
   )

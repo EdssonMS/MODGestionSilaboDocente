@@ -114,7 +114,7 @@ export const ListUnidadesComponent = () => {
     return (
         <main>
         <section id='list-content-cont' className='container'>
-        <h2 id='list-header' className='text-center'>Unidades de aprendizaje</h2>
+        <h2 id='list-header' className='text-center'>Programaciones de contenido</h2>
         <div id='list-welcome'>
             <h6>Bienvenido(a): USUARIO DOCENTE</h6>
             <Link id='btn-list-create' to={'/add-grupo'}>
