@@ -90,12 +90,15 @@ public class PDFGenerator {
         document.add(new Paragraph("3. COMPETENCIAS DEL PERFIL DE EGRESO A LA QUE CONTRIBUYE LA ASIGNATURA").setFontSize(10).setBold().setFontColor(headerColor));
 
         /*=======================================LOGROS DE APRENDIZAJE==========================================*/
+        String logrosAprendizaje = rootNode.get("logrosAprendizaje").asText();
         document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
-
+        document.add(new Paragraph(logrosAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
         /*=======================================CAPACIDADES==========================================*/
         document.add(new Paragraph("5. CAPACIDADES (Logros por unidad)").setFontSize(10).setBold().setFontColor(headerColor));
-
+        String log = rootNode.get("logrosAprendizaje").asText();
+        document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
+        document.add(new Paragraph(logrosAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
         /*=======================================PROGRAMACION DE CONTENIDOS==========================================*/
         document.add(new Paragraph("6. PROGRAMACIÓN DE CONTENIDOS").setFontSize(10).setBold().setFontColor(headerColor));
@@ -111,6 +114,12 @@ public class PDFGenerator {
 
         /*=======================================REFERENCIAS BIBLIOGRAFICAS==========================================*/
         document.add(new Paragraph("9. REFERENCIAS BIBLIOGRAFIAS").setFontSize(10).setBold().setFontColor(headerColor));
+
+
+
+
+
+
         document.close();
         return new ByteArrayInputStream(out.toByteArray());
     }
