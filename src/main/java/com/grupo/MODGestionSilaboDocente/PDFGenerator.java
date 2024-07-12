@@ -8,9 +8,11 @@ import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.ListItem;
-import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.layout.property.VerticalAlignment;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +33,7 @@ public class PDFGenerator {
         //Colores:
         Color headerColor = new DeviceRgb(0, 0, 0);
         Color textColor = new DeviceRgb(33, 33, 33);
+        Color tableHeaderColor = new DeviceRgb(227, 227, 227);
 
         // Recorrer el JSON y agregar los elementos al documento:
         /*=======================================ENCABEZADO==========================================*/
@@ -62,7 +65,6 @@ public class PDFGenerator {
         String nombreDocente = rootNode.get("nombreDocente").asText();
         String apellidoDocente = rootNode.get("apellidoDocente").asText();
         String correoDocente = rootNode.get("correoDocente").asText();
-
         document.add(new Paragraph("1. INFORMACIÓN GENERAL").setFontSize(10).setBold().setFontColor(headerColor));
         // Crear lista numerada para la informacion general
         com.itextpdf.layout.element.List list = new com.itextpdf.layout.element.List().setSymbolIndent(12).setListSymbol("").setFontSize(10).setFontColor(textColor);
@@ -82,7 +84,6 @@ public class PDFGenerator {
 
         /*=======================================SUMILLA==========================================*/
         String sumilla = rootNode.get("sumilla").asText();
-
         document.add(new Paragraph("2. SUMILLA").setFontSize(10).setBold().setFontColor(headerColor));
         document.add(new Paragraph(sumilla).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
@@ -111,8 +112,50 @@ public class PDFGenerator {
         String evaluacionAprendizaje = rootNode.get("evaluacionAprendizaje").asText();
         document.add(new Paragraph("8. EVALUACION DEL APRENDIZAJE").setFontSize(10).setBold().setFontColor(headerColor));
         document.add(new Paragraph(evaluacionAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
-
-        //FALTA HACER LA TABLA
+        float[] columnWidths = {2, 2, 2, 2, 2, 2};
+        Table table = new Table(columnWidths);
+        table.setFontSize(9);
+        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        table.setWidth(UnitValue.createPercentValue(90));
+        // HEAD TABLE
+        table.addCell(new Cell(2, 1).add(new Paragraph("Unidad de aprendizaje")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell(2, 1).add(new Paragraph("Criterios y logros de aprendizaje")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell(2, 1).add(new Paragraph("Procedimientos (Productos)")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell(2, 1).add(new Paragraph("Instrumentos de evaluación")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell(1, 2).add(new Paragraph("Pesos en porcentajes")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell().add(new Paragraph("Sesiones")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        table.addCell(new Cell().add(new Paragraph("Notas SUM")).setBold().setFontColor(headerColor).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setBackgroundColor(tableHeaderColor));
+        // BODY TABLE
+        table.addCell(new Cell().add(new Paragraph("1, 2")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Exposición parcial del proyecto del curso")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Presentación y exposición")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Proyecto del curso")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("100%")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(2, 1).add(new Paragraph("N1")).setBold().setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(1, 4).add(new Paragraph("Total Nota 1")).setBold().setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("100%")).setBold().setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(2, 1).add(new Paragraph("1, 2, 3")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Realiza trabajos prácticos")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Trabajos prácticos resueltos")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Rubrica")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("75%")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(3, 1).add(new Paragraph("N2")).setBold().setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Participación en clase")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Intervenciones en clase")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Evaluación oral")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("25%")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(1, 4).add(new Paragraph("Total Nota 2")).setBold().setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("100%")).setBold().setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("3")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Exposición final del proyecto del curso")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Presentación, exposición")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("Proyecto del curso")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("100%")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(2, 1).add(new Paragraph("N3")).setBold().setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(1, 4).add(new Paragraph("Total Nota 3")).setBold().setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell().add(new Paragraph("100%")).setTextAlignment(TextAlignment.CENTER).setBold().setVerticalAlignment(VerticalAlignment.MIDDLE));
+        table.addCell(new Cell(1, 6).add(new Paragraph("Promedio final = 0.3 * N1 + 0.4 * N2 + 0.3 * N3")).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+        document.add(table);
 
         /*=======================================REFERENCIAS BIBLIOGRAFICAS==========================================*/
         String bibliografia = rootNode.get("bibliografia").asText();
@@ -120,10 +163,8 @@ public class PDFGenerator {
         document.add(new Paragraph(bibliografia).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
 
-
-
-
         document.close();
         return new ByteArrayInputStream(out.toByteArray());
     }
+
 }

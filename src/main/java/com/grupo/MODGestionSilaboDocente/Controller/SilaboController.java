@@ -170,10 +170,7 @@ public class SilaboController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "inline; filename=output.pdf");
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(bis.readAllBytes());
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(bis.readAllBytes());
 
         } catch (IOException e) {
             e.printStackTrace();
