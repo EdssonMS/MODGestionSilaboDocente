@@ -91,30 +91,25 @@ public class PDFGenerator {
         document.add(new Paragraph("3. COMPETENCIAS DEL PERFIL DE EGRESO A LA QUE CONTRIBUYE LA ASIGNATURA").setFontSize(10).setBold().setFontColor(headerColor));
         // Obtener la lista de competencias del JSON
         JsonNode competenciasNode = rootNode.get("competencias");
-
-// Crear la tabla para las competencias
         float[] competenciasColumnWidths = {2, 4, 2, 2}; // Ancho de las columnas
         Table competenciasTable = new Table(competenciasColumnWidths);
         competenciasTable.setFontSize(9);
         competenciasTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
         competenciasTable.setWidth(UnitValue.createPercentValue(90));
-
-// CABECERAS DE LA TABLA
+        //HEAD TALBLE
         competenciasTable.addHeaderCell("Código").setFontColor(headerColor).setBold();
         competenciasTable.addHeaderCell("Descripción").setFontColor(headerColor).setBold();
         competenciasTable.addHeaderCell("Tipo").setFontColor(headerColor).setBold();
         competenciasTable.addHeaderCell("Nivel").setFontColor(headerColor).setBold();
-
-// Recorrer las competencias y añadir filas a la tabla
+        // RECORRE COOMPETTENCIAS Y AÑADE LAS FILAS A LA TABLA BODY
         for (JsonNode competencia : competenciasNode) {
             competenciasTable.addCell(competencia.get("codigo").asText()).setFontColor(textColor);
             competenciasTable.addCell(competencia.get("descripcion").asText()).setFontColor(textColor);
             competenciasTable.addCell(competencia.get("tipo").asText()).setFontColor(textColor);
             competenciasTable.addCell(competencia.get("nivel").asText()).setFontColor(textColor);
         }
-
-// Añadir la tabla al documento
         document.add(competenciasTable);
+
         /*=======================================LOGROS DE APRENDIZAJE==========================================*/
         String logrosAprendizaje = rootNode.get("logrosAprendizaje").asText();
         document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
@@ -126,7 +121,48 @@ public class PDFGenerator {
 
         /*=======================================PROGRAMACION DE CONTENIDOS==========================================*/
         document.add(new Paragraph("6. PROGRAMACIÓN DE CONTENIDOS").setFontSize(10).setBold().setFontColor(headerColor));
+        // Obtener la lista de unidades de aprendizaje del JSON
+        JsonNode unidadesNode = rootNode.get("unidadesAprendizaje");
 
+// Recorrer cada unidad de aprendizaje
+        for (int i = 0; i < unidadesNode.size(); i++) {
+            JsonNode unidad = unidadesNode.get(i);
+            String nombreUnidad = unidad.get("nombreUnidad").asText();
+            String logroUnidad = unidad.get("logroUnidad").asText();
+            JsonNode semanasNode = unidad.get("semanas");
+
+            // Crear la tabla para la unidad de aprendizaje
+            float[] unitColumnWidths = {2, 2, 2, 2, 2}; // Ancho de las columnas
+            Table unidadTable = new Table(unitColumnWidths);
+            unidadTable.setFontSize(9);
+            unidadTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            unidadTable.setWidth(UnitValue.createPercentValue(90));
+
+            // Añadir las filas estáticas de la tabla
+            unidadTable.addCell(new Cell(1, 5).add(new Paragraph("Unidad " + (i + 1) + ": " + nombreUnidad).setBold().setFontColor(headerColor)).setBold());
+            Paragraph logrosTitle = new Paragraph("Logros por unidad:").setFontColor(textColor).setUnderline().setBold();
+            Paragraph logrosContent = new Paragraph("• " + logroUnidad).setFontColor(textColor).setMarginLeft(20);
+            Cell logrosCell = new Cell(1, 5);
+            logrosCell.add(logrosTitle);
+            logrosCell.add(logrosContent);
+            unidadTable.addCell(logrosCell);
+            unidadTable.addCell("Semana").setBold();
+            unidadTable.addCell("Contenido").setBold();
+            unidadTable.addCell("Actividades").setBold();
+            unidadTable.addCell("Recursos").setBold();
+            unidadTable.addCell("Estrategias").setBold();
+
+            // Recorrer las semanas de la unidad de aprendizaje y añadirlas a la tabla
+            for (JsonNode semana : semanasNode) {
+                unidadTable.addCell(semana.get("semana").asText()).setFontColor(textColor).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE);
+                unidadTable.addCell(semana.get("contenido").asText()).setFontColor(textColor);
+                unidadTable.addCell(semana.get("actividades").asText()).setFontColor(textColor);
+                unidadTable.addCell(semana.get("recursos").asText()).setFontColor(textColor);
+                unidadTable.addCell(semana.get("estrategias").asText()).setFontColor(textColor);
+            }
+            document.add(unidadTable);
+            document.add(new Paragraph("\n"));
+        }
 
         /*=======================================ESTRATEGIA DIDACTICA==========================================*/
         String estrategiaDidactica = rootNode.get("estrategiaDidactica").asText();
