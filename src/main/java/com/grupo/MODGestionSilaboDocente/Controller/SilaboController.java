@@ -1,12 +1,18 @@
 package com.grupo.MODGestionSilaboDocente.Controller;
 
 import com.grupo.MODGestionSilaboDocente.Models.*;
+import com.grupo.MODGestionSilaboDocente.PDFGenerator;
 import com.grupo.MODGestionSilaboDocente.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -155,5 +161,24 @@ public class SilaboController {
     @GetMapping("/grupo/json")
     public Flux<GrupoJson> getAllGrupoJson() {
         return grupoJsonService.findAll();
+    }
+
+    @PostMapping("/generar-pdf")
+    public ResponseEntity<byte[]> generatePdf(@RequestBody String json) {
+        try {
+            ByteArrayInputStream bis = PDFGenerator.generatePdfFromJson(json);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=output.pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(bis.readAllBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
     }
 }
