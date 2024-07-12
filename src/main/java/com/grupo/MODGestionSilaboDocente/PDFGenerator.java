@@ -85,7 +85,7 @@ public class PDFGenerator {
         /*=======================================SUMILLA==========================================*/
         String sumilla = rootNode.get("sumilla").asText();
         document.add(new Paragraph("2. SUMILLA").setFontSize(10).setBold().setFontColor(headerColor));
-        document.add(new Paragraph(sumilla).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
+        document.add(new Paragraph(sumilla).setFontSize(9).setFontColor(textColor).setMarginLeft(20).setMarginRight(20));
 
         /*=======================================COMPETENCIAS==========================================*/
         document.add(new Paragraph("3. COMPETENCIAS DEL PERFIL DE EGRESO A LA QUE CONTRIBUYE LA ASIGNATURA").setFontSize(10).setBold().setFontColor(headerColor));
@@ -117,27 +117,35 @@ public class PDFGenerator {
 
         /*=======================================CAPACIDADES==========================================*/
         document.add(new Paragraph("5. CAPACIDADES (Logros por unidad)").setFontSize(10).setBold().setFontColor(headerColor));
+        JsonNode unidadesNode0 = rootNode.get("unidadesAprendizaje");
+        for (int i = 0; i < unidadesNode0.size(); i++) {
+            JsonNode unidad = unidadesNode0.get(i);
+            String logroUnidad = unidad.get("logroUnidad").asText();
+            String unidadTitle = "Unidad " + (i + 1) + ":";
+            Paragraph unidadParagraph = new Paragraph();
+            unidadParagraph.setFontSize(10).setFontColor(textColor);
+            unidadParagraph.add(new Text(unidadTitle).setFontColor(headerColor).setUnderline()).setMarginLeft(20).setMarginRight(20);
+            unidadParagraph.add(" " + logroUnidad);
+            document.add(unidadParagraph);
+        }
 
 
         /*=======================================PROGRAMACION DE CONTENIDOS==========================================*/
         document.add(new Paragraph("6. PROGRAMACIÓN DE CONTENIDOS").setFontSize(10).setBold().setFontColor(headerColor));
         // Obtener la lista de unidades de aprendizaje del JSON
         JsonNode unidadesNode = rootNode.get("unidadesAprendizaje");
-
-// Recorrer cada unidad de aprendizaje
+        // Recorrer cada unidad de aprendizaje
         for (int i = 0; i < unidadesNode.size(); i++) {
             JsonNode unidad = unidadesNode.get(i);
             String nombreUnidad = unidad.get("nombreUnidad").asText();
             String logroUnidad = unidad.get("logroUnidad").asText();
             JsonNode semanasNode = unidad.get("semanas");
-
             // Crear la tabla para la unidad de aprendizaje
             float[] unitColumnWidths = {2, 2, 2, 2, 2}; // Ancho de las columnas
             Table unidadTable = new Table(unitColumnWidths);
             unidadTable.setFontSize(9);
             unidadTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
             unidadTable.setWidth(UnitValue.createPercentValue(90));
-
             // Añadir las filas estáticas de la tabla
             unidadTable.addCell(new Cell(1, 5).add(new Paragraph("Unidad " + (i + 1) + ": " + nombreUnidad).setBold().setFontColor(headerColor)).setBold());
             Paragraph logrosTitle = new Paragraph("Logros por unidad:").setFontColor(textColor).setUnderline().setBold();
@@ -151,7 +159,6 @@ public class PDFGenerator {
             unidadTable.addCell("Actividades").setBold();
             unidadTable.addCell("Recursos").setBold();
             unidadTable.addCell("Estrategias").setBold();
-
             // Recorrer las semanas de la unidad de aprendizaje y añadirlas a la tabla
             for (JsonNode semana : semanasNode) {
                 unidadTable.addCell(semana.get("semana").asText()).setFontColor(textColor).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -172,7 +179,7 @@ public class PDFGenerator {
         /*=======================================EVALUACION DE APRENDIZAJE==========================================*/
         String evaluacionAprendizaje = rootNode.get("evaluacionAprendizaje").asText();
         document.add(new Paragraph("8. EVALUACION DEL APRENDIZAJE").setFontSize(10).setBold().setFontColor(headerColor));
-        document.add(new Paragraph(evaluacionAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
+        document.add(new Paragraph(evaluacionAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20).setMarginRight(20));
         float[] columnWidths = {2, 2, 2, 2, 2, 2};
         Table table = new Table(columnWidths);
         table.setFontSize(9);
