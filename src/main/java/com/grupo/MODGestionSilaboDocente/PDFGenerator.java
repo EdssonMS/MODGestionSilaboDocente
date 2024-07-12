@@ -87,24 +87,30 @@ public class PDFGenerator {
         document.add(new Paragraph(sumilla).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
         /*=======================================COMPETENCIAS==========================================*/
-
+        document.add(new Paragraph("3. COMPETENCIAS DEL PERFIL DE EGRESO A LA QUE CONTRIBUYE LA ASIGNATURA").setFontSize(10).setBold().setFontColor(headerColor));
 
         /*=======================================LOGROS DE APRENDIZAJE==========================================*/
+        document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================CAPACIDADES==========================================*/
+        document.add(new Paragraph("5. CAPACIDADES (Logros por unidad)").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================PROGRAMACION DE CONTENIDOS==========================================*/
+        document.add(new Paragraph("6. PROGRAMACIÓN DE CONTENIDOS").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================ESTRATEGIA DIDACTICA==========================================*/
+        document.add(new Paragraph("7. ESTRATEGIA DIDACTICA").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================EVALUACION DE APRENDIZAJE==========================================*/
+        document.add(new Paragraph("8. EVALUACION DEL APRENDIZAJE").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================REFERENCIAS BIBLIOGRAFICAS==========================================*/
+        document.add(new Paragraph("9. REFERENCIAS BIBLIOGRAFIAS").setFontSize(10).setBold().setFontColor(headerColor));
         document.close();
         return new ByteArrayInputStream(out.toByteArray());
     }
