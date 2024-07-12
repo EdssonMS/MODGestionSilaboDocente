@@ -96,25 +96,28 @@ public class PDFGenerator {
 
         /*=======================================CAPACIDADES==========================================*/
         document.add(new Paragraph("5. CAPACIDADES (Logros por unidad)").setFontSize(10).setBold().setFontColor(headerColor));
-        String log = rootNode.get("logrosAprendizaje").asText();
-        document.add(new Paragraph("4. LOGROS DE APRENDIZAJE (Competencias de la asignatura)").setFontSize(10).setBold().setFontColor(headerColor));
-        document.add(new Paragraph(logrosAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
+
 
         /*=======================================PROGRAMACION DE CONTENIDOS==========================================*/
         document.add(new Paragraph("6. PROGRAMACIÓN DE CONTENIDOS").setFontSize(10).setBold().setFontColor(headerColor));
 
 
         /*=======================================ESTRATEGIA DIDACTICA==========================================*/
+        String estrategiaDidactica = rootNode.get("estrategiaDidactica").asText();
         document.add(new Paragraph("7. ESTRATEGIA DIDACTICA").setFontSize(10).setBold().setFontColor(headerColor));
-
+        document.add(new Paragraph(estrategiaDidactica).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
         /*=======================================EVALUACION DE APRENDIZAJE==========================================*/
+        String evaluacionAprendizaje = rootNode.get("evaluacionAprendizaje").asText();
         document.add(new Paragraph("8. EVALUACION DEL APRENDIZAJE").setFontSize(10).setBold().setFontColor(headerColor));
+        document.add(new Paragraph(evaluacionAprendizaje).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
+        //FALTA HACER LA TABLA
 
         /*=======================================REFERENCIAS BIBLIOGRAFICAS==========================================*/
+        String bibliografia = rootNode.get("bibliografia").asText();
         document.add(new Paragraph("9. REFERENCIAS BIBLIOGRAFIAS").setFontSize(10).setBold().setFontColor(headerColor));
-
+        document.add(new Paragraph(bibliografia).setFontSize(9).setFontColor(textColor).setMarginLeft(20));
 
 
 
